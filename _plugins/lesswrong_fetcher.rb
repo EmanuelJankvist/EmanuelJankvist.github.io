@@ -106,8 +106,7 @@ module Jekyll
               }
             }
           }
-        GRAPHQL
-        ,
+        GRAPHQL,
         variables: {
           limit: limit,
           offset: offset
