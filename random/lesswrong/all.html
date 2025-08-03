@@ -1,0 +1,35 @@
+---
+layout: null
+---
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Random LessWrong Post</title>
+    <script>
+        // Load posts data
+        fetch('/assets/lesswrong_posts.json')
+            .then(response => response.json())
+            .then(posts => {
+                if (posts.length > 0) {
+                    // Select random post
+                    const randomPost = posts[Math.floor(Math.random() * posts.length)];
+                    
+                    // Construct LessWrong URL
+                    const url = randomPost.url || `https://www.lesswrong.com/posts/${randomPost._id}/${randomPost.slug}`;
+                    
+                    // Redirect
+                    window.location.href = url;
+                } else {
+                    document.body.innerHTML = '<p>No posts available. Please rebuild the site to fetch posts.</p>';
+                }
+            })
+            .catch(error => {
+                console.error('Error loading posts:', error);
+                document.body.innerHTML = '<p>Error loading posts. Please try again later.</p>';
+            });
+    </script>
+</head>
+<body>
+    <p>Selecting a random LessWrong post...</p>
+</body>
+</html>

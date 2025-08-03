@@ -1,0 +1,35 @@
+---
+layout: null
+---
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Random Recent LessWrong Post</title>
+    <script>
+        // Load recent posts data
+        fetch('/assets/lesswrong_recent_posts.json')
+            .then(response => response.json())
+            .then(posts => {
+                if (posts.length > 0) {
+                    // Select random post
+                    const randomPost = posts[Math.floor(Math.random() * posts.length)];
+                    
+                    // Construct LessWrong URL
+                    const url = randomPost.url || `https://www.lesswrong.com/posts/${randomPost._id}/${randomPost.slug}`;
+                    
+                    // Redirect
+                    window.location.href = url;
+                } else {
+                    document.body.innerHTML = '<p>No recent posts available. Posts from the last week will appear here after the next site rebuild.</p>';
+                }
+            })
+            .catch(error => {
+                console.error('Error loading posts:', error);
+                document.body.innerHTML = '<p>Error loading posts. Please try again later.</p>';
+            });
+    </script>
+</head>
+<body>
+    <p>Selecting a random recent LessWrong post from the last week...</p>
+</body>
+</html>
