@@ -34,6 +34,7 @@ module Jekyll
       site.data['lesswrong_recent_posts'] = recent_posts
       
       # Create JSON files for client-side access
+      FileUtils.mkdir_p(File.join(site.source, '_data'))
       File.write(File.join(site.source, '_data', 'lesswrong_posts.json'), posts.to_json)
       File.write(File.join(site.source, '_data', 'lesswrong_high_karma_posts.json'), high_karma_posts.to_json)
       File.write(File.join(site.source, '_data', 'lesswrong_recent_posts.json'), recent_posts.to_json)
@@ -94,7 +95,7 @@ module Jekyll
               _id
               title
               slug
-              baseScore
+              baseScore  
               url
               postedAt
             }
