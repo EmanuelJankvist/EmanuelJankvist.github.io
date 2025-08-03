@@ -24,8 +24,8 @@ module Jekyll
       # Filter recent posts (last 7 days)
       one_week_ago = Time.now - (7 * 24 * 60 * 60)
       recent_posts = posts.select do |post|
-        if post['createdAt']
-          post_time = Time.parse(post['createdAt']) rescue nil
+        if post['postedAt']
+          post_time = Time.parse(post['postedAt']) rescue nil
           post_time && post_time > one_week_ago
         else
           false
@@ -96,7 +96,7 @@ module Jekyll
               slug
               baseScore
               url
-              createdAt
+              postedAt
             }
           }
         }
@@ -115,6 +115,7 @@ module Jekyll
       
       request = Net::HTTP::Post.new(uri.path)
       request['Content-Type'] = 'application/json'
+      request['User-Agent'] = 'Mozilla/5.0 (compatible; Jekyll-LessWrong-Fetcher/1.0)'
       request.body = query.to_json
       
       response = http.request(request)
