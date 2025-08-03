@@ -38,11 +38,6 @@ module Jekyll
       File.write(File.join(site.source, '_data', 'lesswrong_high_karma_posts.json'), high_karma_posts.to_json)
       File.write(File.join(site.source, '_data', 'lesswrong_recent_posts.json'), recent_posts.to_json)
       
-      # Also create static files that will be copied to the output
-      site.static_files << Jekyll::StaticFile.new(site, site.source, "/assets", "lesswrong_posts.json")
-      site.static_files << Jekyll::StaticFile.new(site, site.source, "/assets", "lesswrong_high_karma_posts.json")
-      site.static_files << Jekyll::StaticFile.new(site, site.source, "/assets", "lesswrong_recent_posts.json")
-      
       # Create the JSON files in assets directory
       FileUtils.mkdir_p(File.join(site.source, 'assets'))
       File.write(File.join(site.source, 'assets', 'lesswrong_posts.json'), posts.to_json)
@@ -83,30 +78,32 @@ module Jekyll
     def fetch_posts_batch(limit, offset)
       uri = URI('https://www.lesswrong.com/graphql')
       
-      query = {
-        query: <<~GRAPHQL
-          query getPosts($limit: Int, $offset: Int) {
-            posts(
-              input: {
-                terms: {
-                  limit: $limit
-                  offset: $offset
-                  meta: null
-                  filter: "frontpage"
-                }
-              }
-            ) {
-              results {
-                _id
-                title
-                slug
-                baseScore
-                url
-                createdAt
+      graphql_query = %Q{
+        query getPosts($limit: Int, $offset: Int) {
+          posts(
+            input: {
+              terms: {
+                limit: $limit
+                offset: $offset
+                meta: null
+                filter: "frontpage"
               }
             }
+          ) {
+            results {
+              _id
+              title
+              slug
+              baseScore
+              url
+              createdAt
+            }
           }
-        GRAPHQL,
+        }
+      }
+      
+      query = {
+        query: graphql_query,
         variables: {
           limit: limit,
           offset: offset
