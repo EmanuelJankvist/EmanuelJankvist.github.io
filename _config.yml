@@ -1,0 +1,43 @@
+# Site settings
+title: Your Name
+email: your-email@example.com
+description: >-
+  A minimalist personal website showcasing my work and thoughts.
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "" # the base hostname & protocol for your site, e.g. http://example.com
+
+# Social links
+social:
+  twitter: your-twitter-handle
+  arxiv: https://arxiv.org/a/your_id.html
+  lesswrong: https://www.lesswrong.com/users/your-username
+
+# Build settings
+markdown: kramdown
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+
+# Exclude from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+
+# Collections
+collections:
+  writings:
+    output: true
+    permalink: /writings/:name
+
+# Default layouts
+defaults:
+  - scope:
+      path: ""
+      type: "writings"
+    values:
+      layout: "post"

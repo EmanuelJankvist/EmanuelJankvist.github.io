@@ -1,0 +1,20 @@
+---
+layout: default
+title: Writings
+---
+<div class="writings-page">
+    <h1>Writings</h1>
+    <p class="page-description">A collection of my thoughts, research, and explorations.</p>
+    
+    <div class="writings-list">
+        {% for post in site.writings %}
+        <article class="writing-item">
+            <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%B %d, %Y" }}</time>
+            <h2><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2>
+            {% if post.excerpt %}
+            <p>{{ post.excerpt | strip_html | truncate: 200 }}</p>
+            {% endif %}
+        </article>
+        {% endfor %}
+    </div>
+</div>
