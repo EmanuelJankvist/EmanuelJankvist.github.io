@@ -10,14 +10,6 @@
 </head>
 <body>
     <div class="container">
-        <header>
-            <nav>
-                <a href="{{ '/' | relative_url }}" class="{% if page.url == '/' %}active{% endif %}">Home</a>
-                <a href="{{ '/writings' | relative_url }}" class="{% if page.url contains '/writings' %}active{% endif %}">Writings</a>
-                <a href="{{ '/discovering' | relative_url }}" class="{% if page.url contains '/discovering' %}active{% endif %}">Discovering</a>
-            </nav>
-        </header>
-        
         <main>
             {{ content }}
         </main>
